@@ -5,16 +5,18 @@ import '../styles.css'
 import Zungur from '../imgs/zungur.jpg'
 import Logo from "../imgs/logo.png"
 import {useState} from 'react'
+import Spinner from "../components/Spinner.jsx"
+import Message from '../components/Message.jsx'
 const Login = ()=>{
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password,setPassword]= useState('')
   const [passwordVisibility, setPasswordVisibility] = useState(false)
-  const [err,setErr] = useState('')
+  const [message,setMessage] = useState('')
   const [requesting,setRequesting] = useState(false)
   const login = ()=>{
     setRequesting(true)
-    axios.post('/user/auth/login', {
+    axios.post("http://localhost:5001/user/auth/login", {
       email,
       password
     })
@@ -22,15 +24,16 @@ const Login = ()=>{
       setRequesting(false)
       console.log(response);
       if(response.data.status !== 200){
-        setErr(response.data.msg)
+        setMessage(response.data.msg)
       }else{
-        navigate('/dashboard/home')
+        localStorage.setItem('authTokn', response.data.token)
+          navigate('/dashboard/home')
       }
     })
     .catch((error)=>{
       setRequesting(false)
       console.log(error);
-      setErr('error reaching server!')
+      setMessage('error reaching server!')
     });
   } 
     return(
@@ -48,8 +51,10 @@ const Login = ()=>{
             </div>
           </div>
         <div className='form-wraper'>
+          {requesting && (<div className="loader">{<Spinner/>}</div>)}
         <form className="form">
         <h1>Login</h1>
+        {message && (<Message message={message}/>)}
     <div className="flex-column">
       <label>Email </label></div>
       <div className="inputForm">
@@ -73,8 +78,11 @@ const Login = ()=>{
       <span className="span">Forgot password?</span>
     </div>
     {/* <button class="button-submit">Sign In</button> */}
-    <button className="button-submit"><Link to='/dashboard'>Sign In</Link></button>
-    <p className="p">Don't have an account? <span classNamee
+    <button onClick={(e)=>{
+      e.preventDefault()
+      login()
+    }} className="button-submit" disabled={requesting}>{requesting ? "Please Wait..." : "Sign In"}</button>
+    <p className="p">Don't have an account? <span className
     ="span">Sign Up</span> </p>
 </form>
 </div>
