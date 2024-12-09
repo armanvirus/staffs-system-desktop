@@ -1,11 +1,37 @@
 import React,{useState} from 'react'
+import axios from "axios"
+import Message from "../components/Message.jsx"
+import Spinner from "../components/Spinner.jsx"
 
 function Management() {
   const [oldPassword,setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
+  const [requesting,setRequesting] = useState(false)
+  const [message,setMessage] = useState('')
+  const [showMessage,setShowMessage] = useState(false)
+  const changePassword = ()=>{
+    setRequesting(true)
+    axios.post('http://localhost:5001/user/auth/password/reset',{
+      oldPassword,
+      newPassword
+    },{
+      headers:{"Authorization": `Bearer ${localStorage.getItem('authTokn')}`}
+    }).then((response)=>{
+      setMessage(response.data.msg)
+      setRequesting(false)
+      setShowMessage(true)
+    }).catch((error)=>{
+      setMessage('error reaching server!')
+      setRequesting(false)
+      setShowMessage(true)
+
+    })
+  }
   return (
     <div className="settings-container">
+      {requesting && (<div className="loader-container-dashboard"><Spinner/></div>)}
         <div className="dashboard-title"><h1>Settings</h1></div>
+        {showMessage &&(<div className="register-msg"><div><Message showMessage={setShowMessage} message={message}/></div></div>)}
         <div className="settings">
           <div className="delete-acc">
             <h2>Delete this account</h2>
@@ -44,7 +70,7 @@ function Management() {
               </div>
             </div>
             <div className="set-reset"> 
-      <button className="button-submit">Change Password</button>
+      <button onClick={()=>{changePassword()}} className="button-submit">Change Password</button>
       </div>
             </div>
           </div>

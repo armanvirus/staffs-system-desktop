@@ -11,6 +11,8 @@ import Home from './pages/Home.jsx';
 import Management from './pages/Management.jsx';
 import Register from './pages/Register.jsx';
 import Profile from "./pages/Profile.jsx"
+import RecordP from './pages/Record.jsx';
+import Update from './pages/Update.jsx'
 // Navbar
 const App = ()=>{
     return(
@@ -25,6 +27,8 @@ const App = ()=>{
         <Route path="/dashboard/register" element={<Register/>}/>
         <Route path="/dashboard/staffs" element={<StaffsP/>}/>
         <Route path="/dashboard/profile" element={<Profile/>}/>
+        <Route path="/dashboard/record" element={<RecordP/>}/>
+        <Route path="/dashboard/update" element={<Update/>}/>
         </Route>
         </Routes>
         </Router>

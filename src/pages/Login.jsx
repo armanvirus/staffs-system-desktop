@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../styles.css'
@@ -14,6 +14,7 @@ const Login = ()=>{
   const [passwordVisibility, setPasswordVisibility] = useState(false)
   const [message,setMessage] = useState('')
   const [requesting,setRequesting] = useState(false)
+  const [showMessage,setShowMessage] = useState(false)
   const login = ()=>{
     setRequesting(true)
     axios.post("http://localhost:5001/user/auth/login", {
@@ -27,7 +28,7 @@ const Login = ()=>{
         setMessage(response.data.msg)
       }else{
         localStorage.setItem('authTokn', response.data.token)
-          navigate('/dashboard/home')
+          navigate('/dashboard')
       }
     })
     .catch((error)=>{
@@ -36,6 +37,11 @@ const Login = ()=>{
       setMessage('error reaching server!')
     });
   } 
+  useEffect(()=>{
+    if(localStorage.getItem('authTokn')){
+      navigate('/dashboard')
+    }
+  },[''])
     return(
         <div className='login-page'>
           <div className="school_bg">
@@ -54,7 +60,7 @@ const Login = ()=>{
           {requesting && (<div className="loader">{<Spinner/>}</div>)}
         <form className="form">
         <h1>Login</h1>
-        {message && (<Message message={message}/>)}
+        {showMessage && (<Message showMessage={setShowMessage} message={message}/>)}
     <div className="flex-column">
       <label>Email </label></div>
       <div className="inputForm">

@@ -1,11 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import {useState} from "react"
+import { useLocation, Link } from 'react-router-dom'
+import {useState, useEffect} from "react"
 import axios from 'axios'
 import User from '../imgs/user.png'
 import Message from "../components/Message.jsx"
 import Spinner from "../components/Spinner.jsx"
 function Register() {
+  const location = useLocation();
+  const staff = location.state;
   const [name,setName] = useState('')
   const [email,setEmail] = useState('')
   const [phone,setPhone] = useState('')
@@ -32,7 +34,7 @@ function Register() {
   }
   const register = ()=>{
     setRequesting(true)
-     axios.post('http://localhost:5001/management/add/staffs/info',{
+     axios.put('http://localhost:5001/management/update/staff',{
       name,
       phone,
       gender,
@@ -41,7 +43,8 @@ function Register() {
       rank,
       employmentDate,
       salary,
-      type
+      type,
+      id:staff._id
      },{headers:{"Authorization": `Bearer ${localStorage.getItem('authTokn')}`}})
      .then((response)=>{
       setRequesting(false)
@@ -54,11 +57,22 @@ function Register() {
       setShowMessage(true)
      })
   }
-  console.log(type)
+  
+  useEffect(()=>{
+    setName(staff.name)
+    setPhone(staff.phone)
+    setAddress(staff.address)
+    setDob(staff.dob)
+    setGender(staff.gender)
+    setEmploymentDate(staff.employmentDate)
+    setRank(staff.rank)
+    setSalary(staff.salary)
+    setType(staff.type)
+  },[''])
   return (
     <div className='register'>
       {requesting && (<div className="loader-container-dashboard"><Spinner/></div>)}
-      <div className="dashboard-title"><h1>Rrgister Staff</h1></div>
+      <Link className="arrow-back" to="/dashboard/staffs"> <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#151717"><path d="M650-80 250-480l400-400 61 61.67L372.67-480 711-141.67 650-80Z"/></svg> </Link>
       {showMessage &&(<div className="register-msg"><div><Message showMessage={setShowMessage} message={message}/></div></div>)}
       <div className='register-container'>
         <div className="avatar">
