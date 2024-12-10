@@ -7,8 +7,8 @@ export default function Home() {
 const [loading,setLoading] = useState(true)
 const [stats,setStats] = useState('')
   useEffect(()=>{
-    axios.get('http://localhost:5001/management/get/stat',
-      {headers:{"Authorization": `Bearer ${localStorage.getItem('authTokn')}`}})
+    axios.get('https://staffs-5e4b42dd47bf.herokuapp.com/management/get/stat',
+      {headers:{"Authorization": `Bearer ${sessionStorage.getItem('authTokn')}`}})
       .then((response)=>{
         setStats(response.data.counts)
         setLoading(false)

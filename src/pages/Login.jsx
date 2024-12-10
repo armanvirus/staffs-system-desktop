@@ -17,7 +17,7 @@ const Login = ()=>{
   const [showMessage,setShowMessage] = useState(false)
   const login = ()=>{
     setRequesting(true)
-    axios.post("http://localhost:5001/user/auth/login", {
+    axios.post("https://staffs-5e4b42dd47bf.herokuapp.com/user/auth/login", {
       email,
       password
     })
@@ -26,8 +26,9 @@ const Login = ()=>{
       console.log(response);
       if(response.data.status !== 200){
         setMessage(response.data.msg)
+        setShowMessage(true)
       }else{
-        localStorage.setItem('authTokn', response.data.token)
+        sessionStorage.setItem('authTokn', response.data.token)
           navigate('/dashboard')
       }
     })
@@ -35,10 +36,11 @@ const Login = ()=>{
       setRequesting(false)
       console.log(error);
       setMessage('error reaching server!')
+      setShowMessage(true)
     });
   } 
   useEffect(()=>{
-    if(localStorage.getItem('authTokn')){
+    if(sessionStorage.getItem('authTokn')){
       navigate('/dashboard')
     }
   },[''])

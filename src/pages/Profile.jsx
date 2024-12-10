@@ -7,7 +7,7 @@ function Profile() {
   const [profile, setProfile] = useState('')
   const [loading, setLoading] = useState(true)
   useEffect(()=>{
-    axios.get('http://localhost:5001/management/get/profile',{headers:{"Authorization": `Bearer ${localStorage.getItem('authTokn')}`}})
+    axios.get('https://staffs-5e4b42dd47bf.herokuapp.com/management/get/profile',{headers:{"Authorization": `Bearer ${sessionStorage.getItem('authTokn')}`}})
     .then((response)=>{
       setLoading(false)
       setProfile(response.data.profile)

@@ -34,7 +34,7 @@ function Register() {
   }
   const register = ()=>{
     setRequesting(true)
-     axios.put('http://localhost:5001/management/update/staff',{
+     axios.put('https://staffs-5e4b42dd47bf.herokuapp.com/management/update/staff',{
       name,
       phone,
       gender,
@@ -45,7 +45,7 @@ function Register() {
       salary,
       type,
       id:staff._id
-     },{headers:{"Authorization": `Bearer ${localStorage.getItem('authTokn')}`}})
+     },{headers:{"Authorization": `Bearer ${sessionStorage.getItem('authTokn')}`}})
      .then((response)=>{
       setRequesting(false)
       setMessage(response.data.msg)

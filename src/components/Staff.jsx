@@ -4,7 +4,7 @@ import { useNavigate, Link} from 'react-router-dom';
 const Staff = ({staff, message, showMessage, setList, list})=>{
     const navigator = useNavigate()
     const deleteUser = ()=>{
-        axios.get(`http://localhost:5001/management/delete/staff/${staff._id}`,{headers:{"Authorization": `Bearer ${localStorage.getItem('authTokn')}`}})
+        axios.get(`https://staffs-5e4b42dd47bf.herokuapp.com/management/delete/staff/${staff._id}`,{headers:{"Authorization": `Bearer ${sessionStorage.getItem('authTokn')}`}})
         .then((response)=>{
             message(response.data.msg) 
             showMessage(true)

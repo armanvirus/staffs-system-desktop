@@ -32,7 +32,7 @@ function Register() {
   }
   const register = ()=>{
     setRequesting(true)
-     axios.post('http://localhost:5001/management/add/staffs/info',{
+     axios.post('https://staffs-5e4b42dd47bf.herokuapp.com/management/add/staffs/info',{
       name,
       phone,
       gender,
@@ -42,7 +42,7 @@ function Register() {
       employmentDate,
       salary,
       type
-     },{headers:{"Authorization": `Bearer ${localStorage.getItem('authTokn')}`}})
+     },{headers:{"Authorization": `Bearer ${sessionStorage.getItem('authTokn')}`}})
      .then((response)=>{
       setRequesting(false)
       setMessage(response.data.msg)

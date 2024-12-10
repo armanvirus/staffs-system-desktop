@@ -11,11 +11,11 @@ function Management() {
   const [showMessage,setShowMessage] = useState(false)
   const changePassword = ()=>{
     setRequesting(true)
-    axios.post('http://localhost:5001/user/auth/password/reset',{
+    axios.post('https://staffs-5e4b42dd47bf.herokuapp.com/user/auth/password/reset',{
       oldPassword,
       newPassword
     },{
-      headers:{"Authorization": `Bearer ${localStorage.getItem('authTokn')}`}
+      headers:{"Authorization": `Bearer ${sessionStorage.getItem('authTokn')}`}
     }).then((response)=>{
       setMessage(response.data.msg)
       setRequesting(false)
