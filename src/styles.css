@@ -514,3 +514,20 @@ input:checked + .slider:before {
   border-radius: 15px;
   box-shadow: 3px 3px 10px rgba(0, 0 , 10, .1);
 }
+
+.no-staff{
+  z-index: 10;
+  width: 100%;
+  height: 80vh;
+  background: red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-staff a{
+  text-decoration: none;
+  outline: none;
+  color: #000000;
+}

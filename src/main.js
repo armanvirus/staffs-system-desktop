@@ -11,12 +11,16 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    icon:"./imgs/logo.ico",
     webPreferences: {
       autoHideMenuBar: false,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       
     },
   });
+
+  // removing default menu
+  mainWindow.setMenu(null)
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);

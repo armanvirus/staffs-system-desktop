@@ -23,14 +23,17 @@ const [searchKey,setSearchKey] = useState(false)
   console.log(searchKey)
   return (
     <div className="staffs-page">
-          {loading ? (<div className="loader-container-dashboard"><Spinner/></div>) : (<>
+          {loading ? (<div className="loader-container-dashboard"><Spinner/></div>) : ( list ? <>
             <div className="dashboard-title"><h1>Staffs List</h1></div>
           <div>
           {showMessage &&(<div className="list-msg"><div><Message showMessage={setShowMessage} message={message}/></div></div>)}
             <Search searchKey={setSearchKey}/>
             <Staffs searchKey={searchKey} setList={setList} showMessage={setShowMessage} message={setMessage} list={list}/>
           </div>
-          </>)}
+          </> : <div className="no-staff">
+            <p>No staff is found</p>
+            <Link to="/dashboard/register">Register staff</Link>
+          </div>)}
     </div>
   )
 }
